@@ -1,14 +1,14 @@
+// dbConfig.js
 import mongoose from "mongoose";
 
-export default connection = async () => {
+const connection = async () => {
   try {
-    mongoose
-      .connect(process.env.MONGO_URI)
-      .then(() => {
-        console.log("mongoDB Connected");
-      })
-      .catch((error) => console.log(error));
+    await mongoose.connect(process.env.MONGO_URI);
+    console.log("MongoDB Connected");
   } catch (error) {
-    console.log(error);
+    console.error("MongoDB Connection Error:", error);
+    throw error; 
   }
 };
+
+export default connection;

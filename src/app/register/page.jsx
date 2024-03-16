@@ -2,25 +2,29 @@
 
 import React, { useState } from "react";
 import axios from "axios"; 
+import { useRouter } from "next/navigation";
 
 const Register = () => {
-  const [formData, setFormData] = useState({});
+
+  const router = useRouter();
+  const [formData, setFormData] = useState({
+    username: "",
+    email: "",
+    password: ""
+  });
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
   };
 
-  const handleLoginChange = async (e) => {
+  const onLogin = async (e) => {
     e.preventDefault();
 
     try {
-      const response = await axios.post("[Your api]", formData);
+      const response = await axios.post("api/users/register", formData);
 
-      if (response.status === 200) {
-        // Assuming navigate is imported from somewhere
-        // navigate("/");
-        setFormData({});
-      }
+      console.log(response.data);
+      router.push("/login")
     } catch (error) {
       console.log(error);
     }
@@ -30,7 +34,7 @@ const Register = () => {
     <div>
       <div className="flex justify-center mt-14 ">
         <form
-          onSubmit={handleLoginChange}
+          onSubmit={onLogin}
           className="w-full lg:w-1/2 p-10 pb-0 rounded-lg mt-4 font-semibold bg-slate-600"
         >
           <h1 className="sm:text-4xl text-3xl font-bold mb-10 text-white">
