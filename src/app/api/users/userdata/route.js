@@ -7,6 +7,15 @@ connection();
 
 export async function GET(request) {
   try {
+    // Check if the request is made during static generation
+    if (request.renderMode === "passthrough") {
+      return NextResponse.error(
+        "Cannot access cookies during static generation",
+        { status: 500 }
+      );
+    }
+
+    // Access cookies only if the request is made during runtime
     const token = request.cookies.token || "";
     if (!token) {
       return NextResponse.error("Unauthorized", { status: 401 });
