@@ -9,6 +9,16 @@ const ProfilePage = () => {
   const [user, setUser] = useState({});
 
   const router = useRouter();
+  const onLogOut = async () => {
+    try {
+      const response = await axios.get("/api/users/logout");
+
+      console.log(response);
+      router.push("/login");
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   useEffect(() => {
     const fetchUserData = async () => {
