@@ -16,7 +16,7 @@ export async function GET(request) {
     }
 
     // Access cookies only if the request is made during runtime
-    const token = request.cookies.token || "";
+    const token = request.cookies.get("token")?.value || "";
     if (!token) {
       return NextResponse.error("Unauthorized", { status: 401 });
     }
