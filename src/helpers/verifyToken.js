@@ -1,15 +1,11 @@
 import jwt from "jsonwebtoken";
 
-export const verifyToken = (token) => {
-  try {
-    if (!token) {
-      return null; // Token is missing, return null
+export const verifyToken = (request) => {
+    try {
+        const token = request.cookies.get("token")?.value || '';
+        const decodedToken = jwt.verify(token, process.env.TOKEN_SECRET);
+        return decodedToken.id;
+    } catch (error) {
+        throw new Error(error.message);
     }
-
-    const decodedToken = jwt.verify(token, process.env.JWT_SECRET_KEY);
-    return decodedToken.id;
-  } catch (error) {
-    console.error("Error verifying token:", error);
-    throw new Error("Invalid token"); // Throw error when token is invalid
-  }
 };
