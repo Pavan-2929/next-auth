@@ -1,4 +1,6 @@
-import { NextResponse, NextRequest } from "next/server";
+// pages/api/middleware.js
+
+import { NextRequest, NextResponse } from "next/server";
 
 export function middleware(request) {
   const path = request.nextUrl.pathname;
@@ -17,5 +19,7 @@ export function middleware(request) {
 }
 
 export const config = {
-  matcher: ["/", "/profile", "/login", "/register"],
+  api: {
+    bodyParser: false, // Disabling bodyParser
+  },
 };
